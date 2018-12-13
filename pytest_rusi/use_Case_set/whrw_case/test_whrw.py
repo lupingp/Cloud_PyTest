@@ -23,8 +23,6 @@ class TestWhrw():
     @pytest.mark.usefixtures("login_One")
     def test_wdjqr_2(self,driver,login_whrw_2):
         login_whrw_2
-        zzz
-        aaaa
 
 if __name__ == "__main__":
     pytest.main(["-s","test_whrw.py"])
