@@ -3,6 +3,12 @@
 # @Author  : 陆平！！
 # @FileName: whrw_page.py
 # @Software: PyCharm
+
+import time
+import os
+from pytest_rusi.common.base import Base
+from pytest_rusi.page import login_page
+
 '''
      ================================定义基本元素,元祖=================================
 '''
@@ -36,3 +42,49 @@ task_whrw_rwzt_xz = ("xpath","//*[@x-placement='bottom-start']/div/div/ul/li[2]"
 task_cz = ("xpath","//*[@id='scroll']/div/div/div[2]/div/div/form/div[6]/div/button[2]/span")
 #定义 查询 元素
 task_cx = ("xpath","//*[@id='scroll']/div/div/div[2]/div/div/form/div[6]/div/button[1]/span")
+
+def _login_whrw_1(driver):
+    '''对照:测试用例1：批量选中-选中导出'''
+    zen = Base(driver)
+    zen.click(task)
+    time.sleep(0.5)
+    zen.click(task_pldc_mx)
+    time.sleep(1)
+    zen.click(task_pldc_mx_xzdc)
+    os.system("E:\\SoftwareTesting\\Projectpath\\AICC\\aicc_Cloud\\aicc_BatchUpload\\xzdc.exe")
+    time.sleep(3)
+    result = zen.get_text(task_title)
+    if result == "外呼任务":
+        zen.click(login_page.tuichu_denglu)
+        time.sleep(0.5)
+        zen.click(login_page.quit_log)
+        time.sleep(1)
+        zen.click(login_page.quit_queding)
+    else:
+        print("退出失败")
+    time.sleep(1)
+
+def _login_whrw_2(driver):
+    '''对照:测试用例2：外呼任务 - 重置成功'''
+    zen = Base(driver)
+    zen.click(task)
+    time.sleep(0.5)
+    zen.click(task_whrw_rwzt)
+    time.sleep(1)
+    zen.click(task_whrw_rwzt_xz)
+    zen.click(task_cx)
+    time.sleep(1.5)
+    zen.click(task_cz)
+    time.sleep(1)
+    zen.F5()
+    time.sleep(1)
+    result = zen.get_text(task_title)
+    if result == "外呼任务":
+        zen.click(login_page.tuichu_denglu)
+        time.sleep(0.5)
+        zen.click(login_page.quit_log)
+        time.sleep(1)
+        zen.click(login_page.quit_queding)
+        time.sleep(1)
+    else:
+        print("退出失败")

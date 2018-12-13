@@ -6,7 +6,6 @@
 
 import pytest
 import time
-from pytest_rusi.use_Case_set.wdjqr_case import conftest
 
 class Testwdjqr():
 
