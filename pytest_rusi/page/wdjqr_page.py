@@ -63,7 +63,7 @@ wdjqr_ckdx_title = ("xpath", "//*[@id='scroll']/div/div/div[1]/div/span")
 wdjqr_fzbb_asser = ("class", "el-message__content")
 
 def _login_wdjqr_1(driver):
-    '''对照：测试用例1：进入我的机器人页面 并截图'''
+    '''对照：测试用例1：进入我的机器人页面 并截图''''''对照：测试用例2：进入我的机器人页面-查看参数 并截图'''
     zen = Base(driver)
     zen.click(wdjqr_robot)
     time.sleep(2)
@@ -156,13 +156,15 @@ def _login_wdjqr_5(driver):
     time.sleep(2)
     zen.click(wdjqr_ID)
     time.sleep(1)
+    zen.F5()
+    time.sleep(2)
     result = zen.get_text(wdjqr_text)
     time.sleep(0.5)
     if result == "我的机器人":
         zen.click(login_page.tuichu_denglu)
         time.sleep(0.5)
         zen.click(login_page.quit_log)
-        time.sleep(0.5)
+        time.sleep(2)
         zen.click(login_page.quit_queding)
     else:
         print("退出失败")
@@ -219,7 +221,9 @@ def _login_wdjqr_7(driver):
     zen.click(wdjqr_fzbb)
     time.sleep(0.5)
     zen.click(wdjqr_fzbb_qd)
-    time.sleep(3)
+    time.sleep(1)
+    zen.F5()
+    time.sleep(2)
     result = zen.get_text(wdjqr_text)
     time.sleep(0.5)
     if result == "我的机器人":
@@ -231,6 +235,7 @@ def _login_wdjqr_7(driver):
     else:
         print("退出失败")
     time.sleep(1)
+
 
 
 

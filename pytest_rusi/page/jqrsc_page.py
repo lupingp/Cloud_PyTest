@@ -6,9 +6,7 @@
 
 
 import time
-import os
 import datetime
-from selenium import webdriver
 from pytest_rusi.common.base import Base
 from pytest_rusi.page import login_page
 from pytest_rusi.page import xtjk_page
