@@ -5,8 +5,8 @@
 # @Software: PyCharm
 
 import pytest
-from pytest_rusi.page.login_page import _login_One
-from pytest_rusi.page.wdjqr_page import _login_wdjqr_1,_login_wdjqr_2,_login_wdjqr_3,_login_wdjqr_4,_login_wdjqr_5,\
+from Cloud_PyTest.pytest_rusi.page.login_page import _login_One
+from Cloud_PyTest.pytest_rusi.page.wdjqr_page import _login_wdjqr_1,_login_wdjqr_2,_login_wdjqr_3,_login_wdjqr_4,_login_wdjqr_5,\
     _login_wdjqr_6,_login_wdjqr_7
 
 @pytest.fixture(scope="function")

@@ -6,7 +6,7 @@
 
 import pytest
 import time
-from pytest_rusi.page.jqrsc_page import _login_jqrsc_1,_login_jqrsc_2,_login_jqrsc_3,_login_jqrsc_4,_login_jqrsc_5
+from Cloud_PyTest.pytest_rusi.page.jqrsc_page import _login_jqrsc_1,_login_jqrsc_2,_login_jqrsc_3,_login_jqrsc_4,_login_jqrsc_5
 
 class Testjqrsc():
 

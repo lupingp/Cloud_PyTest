@@ -70,7 +70,7 @@ def _login_One(driver, host, user="test0012", psw="111111"):
     zen.sendKeys(username, user)
     zen.sendKeys(password_loc, psw)
     zen.click(submit_loc)
-    # time.sleep(2)
+    time.sleep(2)
 
 def _login_user_result_error(driver):
     '''

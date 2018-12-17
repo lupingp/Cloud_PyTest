@@ -1,7 +1,7 @@
 # coding:utf-8
 import pytest
 import time
-from pytest_rusi.page.login_page import _login,_login_user_result_error,_login_pwd_result_error,_login_submit_result_error
+from Cloud_PyTest.pytest_rusi.page.login_page import _login,_login_user_result_error,_login_pwd_result_error,_login_submit_result_error
 
 class TestLogin():
 
