@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
@@ -9,8 +10,8 @@ class Base():
 
     def __init__(self, driver):
         self.driver = driver
-        self.timeout = 10
-        self.t = 0.5
+        self.timeout = 5
+        self.t = 1
 
     def find_element(self, locator):
         """
@@ -37,7 +38,7 @@ class Base():
         else:
             raise NameError("Please enter the correct targeting elements,'id','name','class','text','xpath','css'.")
 
-    def wait_element(self, locator, seconds=5):
+    def wait_element(self, locator):
         """
         等待元素在指定的时间类出现
         :param element:      元素的定位表达式
@@ -46,52 +47,72 @@ class Base():
         """
         by = locator[0]
         value = locator[1]
-
+        print("正在定位元素信息：定位方式->%s, value值->%s" % (locator[0], locator[1]))
         if by == "id":
-            WebDriverWait(self.driver, seconds, 1).until(EC.presence_of_element_located((By.ID, value)))
+            a = WebDriverWait(self.driver, self.timeout,self.t).until(EC.presence_of_element_located(locator))
+            return a
         elif by == "name":
-            WebDriverWait(self.driver, seconds, 1).until(EC.presence_of_element_located((By.NAME, value)))
+            b = WebDriverWait(self.driver, self.timeout, self.t).until(EC.presence_of_element_located(locator))
+            return b
         elif by == "class":
-            WebDriverWait(self.driver, seconds, 1).until(EC.presence_of_element_located((By.CLASS_NAME, value)))
+            c = WebDriverWait(self.driver, self.timeout, self.t).until(EC.presence_of_element_located(locator))
+            return c
         elif by == "text":
-            WebDriverWait(self.driver, seconds, 1).until(EC.presence_of_element_located((By.LINK_TEXT, value)))
+            d = WebDriverWait(self.driver, self.timeout, self.t).until(EC.presence_of_element_located(locator))
+            return d
         elif by == "xpath":
-            WebDriverWait(self.driver, seconds, 1).until(EC.presence_of_element_located((By.XPATH, value)))
+            e = WebDriverWait(self.driver, self.timeout, self.t).until(EC.presence_of_element_located(locator))
+            return e
         elif by == "css":
-            WebDriverWait(self.driver, seconds, 1).until(EC.presence_of_element_located((By.CSS_SELECTOR, value)))
+            f = WebDriverWait(self.driver, self.timeout, self.t).until(EC.presence_of_element_located(locator))
+            return f
         else:
             raise NameError("Please enter the correct targeting elements,'id','name','class','text','xpaht','css'.")
 
-    def findElement(self, locator):
-        '''定位到元素，返回元素对象，没定位到，Timeout异常'''
-        if not isinstance(locator, tuple):
-            print('locator参数类型错误，必须传元祖类型：loc = ("id", "value1")')
-        else:
-            print("正在定位元素信息：定位方式->%s, value值->%s"%(locator[0], locator[1]))
-            ele = WebDriverWait(self.driver, self.timeout, self.t).until(EC.presence_of_element_located(locator))
-            return ele
+    # def findElement(self, locator):
+    #     '''定位到元素，返回元素对象，没定位到，Timeout异常'''
+    #     if not isinstance(locator, tuple):
+    #         print('locator参数类型错误，必须传元祖类型：loc = ("id", "value1")')
+    #     else:
+    #         print("正在定位元素信息：定位方式->%s, value值->%s"%(locator[0], locator[1]))
+    #         ele = WebDriverWait(self.driver, self.timeout, self.t).until(EC.presence_of_element_located(locator))
+    #         return ele
+    #
+    # def findElements(self, locator):
+    #     if not isinstance(locator, tuple):
+    #         print('locator参数类型错误，必须传元祖类型：loc = ("id", "value1")')
+    #     else:
+    #         try:
+    #             print("正在定位元素信息：定位方式->%s, value值->%s"%(locator[0], locator[1]))
+    #             eles = WebDriverWait(self.driver, self.timeout, self.t).until(EC.presence_of_all_elements_located(locator))
+    #             return eles
+    #         except:
+    #             return []
 
-    def findElements(self, locator):
-        if not isinstance(locator, tuple):
-            print('locator参数类型错误，必须传元祖类型：loc = ("id", "value1")')
-        else:
-            try:
-                print("正在定位元素信息：定位方式->%s, value值->%s"%(locator[0], locator[1]))
-                eles = WebDriverWait(self.driver, self.timeout, self.t).until(EC.presence_of_all_elements_located(locator))
-                return eles
-            except:
-                return []
-
+    #
     def sendKeys(self, locator, text=''):
+        '''使用强制等待'''
         ele = self.find_element(locator)
         ele.send_keys(text)
 
+    # def sendKeys_timeout(self, locator, text=''):
+    #     '''使用显性等待'''
+    #     ele = self.wait_element(locator)
+    #     ele.send_keys(text)
+
+    # def click(self, locator):
+    #     '''使用显性等待'''
+    #     ele = self.wait_element(locator)
+    #     ele.click()
+
     def click(self, locator):
+        '''使用强制等待'''
         ele = self.find_element(locator)
         ele.click()
 
+
     def clear(self, locator):
-        ele = self.find_element(locator)
+        ele = self.wait_element(locator)
         ele.clear()
 
     # def isSelected(self, locator):
@@ -151,9 +172,9 @@ class Base():
     #     except:
     #         return False
     #
-    # def get_title(self):
-    #     '''获取title'''
-    #     return self.driver.title
+    def get_title(self):
+        '''获取title'''
+        return self.driver.title
 
     def get_text(self, locator):
         '''获取文本'''
@@ -166,16 +187,12 @@ class Base():
 
     def get_attribute(self, locator):
         '''获取属性'''
-        # try:
         ele = self.find_element(locator).get_attribute("textContent")
         return ele
-        # except:
-        #     print("获取text失败，返回''")
-        #     return ''
 
     def js_focus_element(self, locator):
         '''聚焦元素'''
-        target = self.find_element(locator)
+        target = self.wait_element(locator)
         self.driver.execute_script("arguments[0].scrollIntoView();", target)
 
     def js_scroll_top(self):
@@ -190,17 +207,17 @@ class Base():
 
     def select_by_index(self, locator, index=0):
         '''通过索引,index是索引第几个，从0开始，默认选第一个'''
-        element = self.find_element(locator)  # 定位select这一栏
+        element = self.wait_element(locator)  # 定位select这一栏
         Select(element).select_by_index(index)
 
     def select_by_value(self, locator, value):
         '''通过value属性'''
-        element = self.find_element(locator)
+        element = self.wait_element(locator)
         Select(element).select_by_value(value)
 
     def select_by_text(self, locator, text):
         '''通过文本值定位'''
-        element = self.find_element(locator)
+        element = self.wait_element(locator)
         Select(element).select_by_visible_text(text)
 
     def switch_iframe(self, id_index_locator):
@@ -228,7 +245,7 @@ class Base():
 
     def move_to_element(self, locator):
         '''鼠标悬停操作'''
-        ele = self.find_element(locator)
+        ele = self.wait_element(locator)
         ActionChains(self.driver).move_to_element(ele).perform()
 
     def window_max(self):
@@ -261,7 +278,7 @@ class Base():
         :return:
         '''
         self.wait_element(element)
-        self.find_element(element).click()
+        self.wait_element(element).click()
 
     def Right_Click(self, locator):
         '''
@@ -314,7 +331,7 @@ class Base():
     def back_2(self,locator):
         '''获取文本'''
         try:
-            element = self.find_element(locator).back()
+            element = self.wait_element(locator).back()
             return element
         except:
             print("退回失败，返回'' ")
@@ -335,7 +352,7 @@ class Base():
         """
 
         self.wait_element(locator)
-        return self.find_element(locator).is_displayed()
+        return self.wait_element(locator).is_displayed()
 
     def get_title(self):
         """
@@ -359,7 +376,7 @@ class Base():
         :return:
         """
         self.wait_element(locator)
-        self.find_element(locator).submit()
+        self.wait_element(locator).submit()
 
     def switch_to_frame(self, locator):
         """
@@ -368,7 +385,7 @@ class Base():
         :return:
         """
         self.wait_element(locator)
-        self.driver._switch_to_frame(self.find_element(locator))
+        self.driver._switch_to_frame(self.wait_element(locator))
 
     def switch_to_frame_out(self):
         """
@@ -397,4 +414,16 @@ class Base():
         :return:
         """
         self.driver.switch_to.alert.dismiss()
+
+    def get(self,url):
+        """
+        功能：对话框取消
+        :return:
+        """
+        self.driver.get(url)
+
+    def implicitly(self,timeout):
+
+        self.driver.implicitly_wait(timeout)
+
 

@@ -39,21 +39,25 @@ def _login(driver, host, user="test0012", psw="111111"):
     zen.sendKeys(username, user)
     zen.sendKeys(password_loc, psw)
     zen.click(submit_loc)
+    time.sleep(0.5)
     #判断登录是否成功,如果成功 就判断首页是否存在Welcome 然后在判断是否存在 睿思智能客服云平台
     result_1 = zen.get_text(welcome_1)
     if result_1 == "Welcome":
-        result = zen.get_text(welcome)
-        if result == "睿思智能客服云平台":
-            zen.click(tuichu_denglu)
-            time.sleep(1)
-            zen.click(quit_log)
-            time.sleep(1)
-            zen.click(quit_queding)
-        else:
-            print("获取睿思智能客服云平台失败")
+        zen.click(tuichu_denglu)
+        time.sleep(0.5)
+        zen.click(quit_log)
+        time.sleep(0.5)
+        zen.click(quit_queding)
     else:
         print("获取Welcome失败")
-    time.sleep(2)
+
+    #     if result == "睿思智能客服云平台":
+    #
+    #     else:
+    #         print("获取睿思智能客服云平台失败")
+    # else:
+    #
+    # time.sleep(2)
 
 def _login_One(driver, host, user="test0012", psw="111111"):
     '''
@@ -62,11 +66,11 @@ def _login_One(driver, host, user="test0012", psw="111111"):
     zen = Base(driver)
     driver.get(host+"/user/login")
     zen.window_max()
-    time.sleep(1)
+    # time.sleep(1)
     zen.sendKeys(username, user)
     zen.sendKeys(password_loc, psw)
     zen.click(submit_loc)
-    time.sleep(2)
+    # time.sleep(2)
 
 def _login_user_result_error(driver):
     '''
@@ -90,7 +94,7 @@ def _login_submit_result_error(driver):
     :param driver:
     '''
     zen = Base(driver)
-    result_login_error = zen.get_attribute(denglu_tishi_error)
+    result_login_error = zen.get_text(denglu_tishi_error)
 
 if __name__ == "__main__":
     webdriver_chrome = "E:\SoftwareTesting\guge\chrome64_55.0.2883.75\chromedriver.exe"
